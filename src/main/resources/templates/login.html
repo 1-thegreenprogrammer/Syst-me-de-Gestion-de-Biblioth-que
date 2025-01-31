@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Connexion Administrative</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+	<style>
+		body {
+            background-color: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .login-container {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+        .login-title {
+            color: #2c3e50;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        .form-control {
+            border-radius: 8px;
+            padding: 0.8rem;
+            border: 1px solid #e0e0e0;
+        }
+        .form-control:focus {
+            box-shadow: 0 0 0 0.2rem rgba(44, 62, 80, 0.25);
+            border-color: #2c3e50;
+        }
+        .btn-login {
+            background-color: #2c3e50;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .btn-login:hover {
+            background-color: #34495e;
+            transform: translateY(-2px);
+        }
+        .alert {
+            border-radius: 8px;
+        }
+        .form-group label {
+            color: #2c3e50;
+            font-weight: 500;
+        }
+	</style>
+</head>
+<body>
+<div th:insert="comman/header :: header"></div>
+
+<div class="container">
+	<div class="row justify-content-center">
+		<div class="col-md-6">
+			<div class="login-container">
+				<h1 class="login-title">Espace Administrateur</h1>
+				<form th:action="@{/login}" method="post">
+
+					<!-- Message d'erreur -->
+					<div th:if="${param.error}" class="alert alert-danger">
+						<i class="fas fa-exclamation-circle"></i>
+						Identifiant ou mot de passe incorrect.
+					</div>
+
+					<!-- Message de déconnexion -->
+					<div th:if="${param.logout}" class="alert alert-info">
+						<i class="fas fa-info-circle"></i>
+						Vous avez été déconnecté avec succès.
+					</div>
+
+					<div class="form-group">
+						<label for="username">Identifiant</label>
+						<div class="input-group">
+							<div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-user"></i>
+                                    </span>
+							</div>
+							<input type="text" class="form-control" id="username"
+								   name="username" placeholder="Entrez votre email"
+								   autofocus="autofocus" required>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="password">Mot de passe</label>
+						<div class="input-group">
+							<div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-lock"></i>
+                                    </span>
+							</div>
+							<input type="password" class="form-control" id="password"
+								   name="password" placeholder="Entrez votre mot de passe"
+								   required>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<button type="submit" name="login-submit" id="login-submit"
+								class="btn btn-primary btn-login btn-block">
+							<i class="fas fa-sign-in-alt mr-2"></i>Se Connecter
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div th:insert="comman/footer :: footer"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

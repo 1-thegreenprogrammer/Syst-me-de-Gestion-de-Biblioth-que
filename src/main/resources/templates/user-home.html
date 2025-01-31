@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User Home</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fc;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            padding-top: 30px;
+            font-size: 24px;
+        }
+        h2 {
+            color: #34495e;
+            text-align: center;
+            padding-top: 10px;
+            font-size: 20px;
+        }
+        a {
+            display: block;
+            text-align: center;
+            padding: 12px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            width: 100px;
+            margin: 20px auto;
+            border-radius: 5px;
+        }
+        a:hover {
+            background-color: #2980b9;
+        }
+        table {
+            width: 70%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        thead {
+            background-color: #3498db;
+            color: white;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            font-size: 14px;
+        }
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+        .card-body {
+            padding: 15px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+            border-radius: 8px;
+        }
+        .row {
+            display: flex;
+            justify-content: space-between;
+        }
+        .col-md-6 {
+            width: 48%;
+        }
+        .list-group {
+            padding-left: 20px;
+            list-style-type: none;
+        }
+        .list-group-item {
+            background-color: #ecf0f1;
+            border: 1px solid #ddd;
+            margin-bottom: 5px;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+        .list-group-item:hover {
+            background-color: #bdc3c7;
+        }
+        .mt-3 {
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Tableau de Bord des Livres</h1>
+<a href="/logout"> Déconnexion</a>
+
+<h2>Livres terminés</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="book : ${completedBooks}">
+        <td>
+            <div class="card-body">
+                <h4 th:text="${book.name}"></h4>
+                <p><strong>ISBN:</strong> <span th:text="${book.isbn}"></span></p>
+                <p><strong>Serial Name:</strong> <span th:text="${book.serialName}"></span></p>
+                <p><strong>Description:</strong> <span th:text="${book.description}"></span></p>
+                <p><strong>Status:</strong> <span th:text="${book.status}"></span></p>
+            </div>
+        </td>
+        <td>
+            <ul class="list-group">
+                <li class="list-group-item" th:each="author : ${book.authors}" th:text="${author.name}"></li>
+            </ul>
+        </td>
+        <td>
+            <ul class="list-group">
+                <li class="list-group-item" th:each="category : ${book.categories}" th:text="${category.name}"></li>
+            </ul>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

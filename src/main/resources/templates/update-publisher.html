@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Modifier l'Éditeur</title>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+	<style>
+		:root {
+			--primary-color: #2c3e50;
+			--accent-color: #e74c3c;
+			--text-light: #ecf0f1;
+			--background-light: #f8f9fa;
+			--border-color: #dde1e3;
+		}
+
+		/* Global Styles */
+		body {
+			background-color: var(--background-light);
+			color: var(--primary-color);
+			font-family: Arial, sans-serif;
+			line-height: 1.6;
+			margin: 0;
+			height: 100vh;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		/* Header Styles */
+		.header {
+			position: fixed;
+			top: 0;
+			width: 100%;
+			background-color: var(--primary-color);
+			color: var(--text-light);
+			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+			z-index: 1000;
+		}
+
+		.header .container {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 1rem 1.5rem;
+		}
+
+		.header .logo {
+			font-size: 1.5rem;
+			font-weight: bold;
+			color: var(--text-light);
+			text-decoration: none;
+		}
+
+		.nav-links {
+			display: flex;
+			gap: 1.5rem;
+			list-style: none;
+			margin: 0;
+			padding: 0;
+		}
+
+		.nav-links li {
+			display: inline;
+		}
+
+		.nav-links a {
+			text-decoration: none;
+			color: var(--text-light);
+			font-weight: 500;
+			transition: color 0.3s ease;
+		}
+
+		.nav-links a:hover {
+			color: var(--accent-color);
+		}
+
+		.menu-toggle {
+			display: none;
+			color: var(--text-light);
+			font-size: 1.5rem;
+		}
+
+		/* Card Styles */
+		.centered-card {
+			width: 100%;
+			max-width: 500px;
+			background-color: white;
+			border-radius: 10px;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+			padding: 2rem;
+			text-align: center;
+		}
+
+		.page-title {
+			font-size: 1.5rem;
+			font-weight: bold;
+			color: var(--primary-color);
+			margin-bottom: 1.5rem;
+		}
+
+		.form-group {
+			text-align: left;
+			margin-bottom: 1.5rem; /* Add spacing between form groups */
+		}
+
+		.form-group label {
+			display: block;
+			font-weight: 500;
+			color: var(--primary-color);
+			margin-bottom: 0.5rem;
+		}
+
+		.form-control {
+			width: 100%;
+			border: 2px solid var(--border-color);
+			border-radius: 6px;
+			padding: 0.75rem;
+			transition: all 0.3s ease;
+		}
+
+		.form-control:focus {
+			border-color: var(--accent-color);
+			box-shadow: 0 0 0 0.2rem rgba(231, 76, 60, 0.25);
+		}
+
+		.btn-success {
+			background-color: var(--accent-color);
+			border: none;
+			padding: 0.75rem 2rem;
+			border-radius: 6px;
+			font-weight: 500;
+			color: white;
+			transition: all 0.3s ease;
+			margin-top: 1rem; /* Add more space above the button */
+		}
+
+		.btn-success:hover {
+			background-color: #c0392b;
+			transform: translateY(-2px);
+		}
+
+		/* Responsive Styles */
+		@media (max-width: 768px) {
+			.header .container {
+				flex-wrap: wrap;
+			}
+
+			.menu-toggle {
+				display: inline-block;
+			}
+
+			.nav-links {
+				display: none;
+				flex-direction: column;
+				width: 100%;
+				text-align: center;
+				background-color: var(--primary-color);
+				position: absolute;
+				top: 100%;
+				left: 0;
+			}
+
+			.nav-links.show {
+				display: flex;
+			}
+		}
+	</style>
+</head>
+
+<body>
+<!-- Header Section -->
+<header class="header">
+	<div class="container">
+		<!-- Logo -->
+		<a href="/" class="logo">Système de Gestion de Bibliothèque</a>
+
+		<!-- Navigation Links -->
+		<ul class="nav-links">
+			<li><a th:href="@{/books}">Livres</a></li>
+			<li><a th:href="@{/categories}">Auteurs</a></li>
+			<li><a th:href="@{/publishers}" >Éditeurs</a></li>
+			<li><a th:href="@{/categories}">Catégories</a></li>
+			<li><a th:href="@{/login?logout}">Déconnexion</a></li>
+
+		</ul>
+
+		<!-- Hamburger Menu (Mobile) -->
+		<div class="menu-toggle" onclick="toggleMenu()">
+			<i class="fas fa-bars"></i>
+		</div>
+	</div>
+</header>
+
+<!-- Main Content -->
+<div class="centered-card">
+	<h3 class="page-title">
+		<i class="fas fa-user-edit me-2"></i>Modifier l'Éditeur
+	</h3>
+	<form action="#" th:action="@{/update-publisher/{id}(id=${publisher.id})}" th:object="${publisher}" method="post">
+		<div class="form-group">
+			<label for="name">
+				<i class="fas fa-building me-2"></i>Nom de l'Éditeur
+			</label>
+			<input type="text" th:field="*{name}" class="form-control" id="name" placeholder="Saisissez le nom de l'éditeur" required />
+		</div>
+		<div class="form-group">
+			<button type="submit" class="btn-success">
+				<i class="fas fa-save me-2"></i>Enregistrer
+			</button>
+		</div>
+	</form>
+</div>
+
+<script>
+	// Toggle menu for mobile view
+    function toggleMenu() {
+        const navLinks = document.querySelector('.nav-links');
+        navLinks.classList.toggle('show');
+    }
+</script>
+</body>
+</html>

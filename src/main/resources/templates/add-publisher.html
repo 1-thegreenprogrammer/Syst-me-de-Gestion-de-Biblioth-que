@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Ajouter un Éditeur</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .page-title {
+            font-size: 1.75rem;
+            font-weight: bold;
+            color: #343a40;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e74c3c;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        .card {
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-control {
+            border: 2px solid #ced4da;
+            border-radius: 6px;
+            transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        .form-control:focus {
+            border-color: #e74c3c;
+            box-shadow: 0 0 5px rgba(231, 76, 60, 0.5);
+        }
+
+        .btn-success {
+            background-color: #e74c3c;
+            border: none;
+            font-weight: bold;
+            padding: 10px 20px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn-success:hover {
+            background-color: #c0392b;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 0.875rem;
+            margin-top: 5px;
+        }
+    </style>
+    <script>
+        function validateForm() {
+            let isValid = true;
+            const inputs = document.querySelectorAll('.form-control');
+            inputs.forEach(input => {
+                const errorSpan = input.nextElementSibling;
+                if (input.value.trim() === '') {
+                    isValid = false;
+                    errorSpan.textContent = 'Ce champ ne peut pas être vide.';
+                } else {
+                    errorSpan.textContent = '';
+                }
+            });
+            return isValid;
+        }
+    </script>
+</head>
+
+<body>
+<div th:insert="comman/header :: header"></div>
+<div class="container my-5">
+    <h3 class="page-title">Ajouter un Éditeur</h3>
+    <div class="card">
+        <div class="card-body">
+            <div class="col-md-10">
+                <form action="#" th:action="@{/add-publisher}" th:object="${publisher}" method="post"
+                      onsubmit="return validateForm()">
+                    <div class="row">
+                        <div class="form-group col-md-8">
+                            <label for="name" class="col-form-label">Nom de l'Éditeur</label>
+                            <input type="text" th:field="*{name}" class="form-control" id="name"
+                                   placeholder="Saisissez le nom de l'éditeur"/>
+                            <span class="error-message"></span>
+                        </div>
+                        <div class="col-md-6 mt-3">
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-save me-2"></i> Enregistrer
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:insert="comman/footer :: footer"></div>
+</body>
+
+</html>
