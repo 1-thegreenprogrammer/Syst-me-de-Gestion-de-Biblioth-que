@@ -1,50 +1,100 @@
-# Java, Spring Boot Mini Project - Library Management System
+# Java, Spring Boot Mini Projet - Système de Gestion de Bibliothèque
 
+## Lien du projet GitHub
+[Repository GitHub](https://github.com/1-thegreenprogrammer/Syst-me-de-Gestion-de-Biblioth-que)
 
-# Local setup
+## Identifiants
+- **Connexion Admin** :
+    - Email : `admin@admin.in`
+    - Mot de passe : `Gema123`
+- **Connexion Étudiant** :
+    - Email : `etudiant@gema.edu`
+    - Mot de passe : `Gema123`
 
-Step 1: Download or clone the source code from GitHub to the local machine
+## Aperçu de l'Application
+Cette application est un **Système de Gestion de Bibliothèque** avec deux rôles utilisateurs :
+- **Étudiant** : Peut parcourir les livres disponibles dans la bibliothèque.
+- **Admin** : Gère les livres, les auteurs, les catégories et les éditeurs.
 
-Step 2: Install JDK 17 - https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html
+## URL de l'Application
+- L'application fonctionne sur : `http://127.0.0.1:8080`
 
-Step 3: Install IntelliJ IDEA or Eclipse or Apache NetBeans IDE
+## Installation Locale
 
-Step 4: Install Apache Maven - https://maven.apache.org/install.html
+### Remarque
+L'application utilise une base de données MySQL dans un conteneur avec les identifiants mentionnés ci-dessous. Vous devez configurer le conteneur MySQL localement pour y accéder.
 
-Step 5:  ```mvn clean install```
+### Configuration de la base de données MySQL dans un conteneur
+Exécutez la commande suivante pour créer un conteneur MySQL avec les bonnes configurations :
+```sh
+docker run --name mysql-library -e MYSQL_ROOT_PASSWORD=rootpassword -e MYSQL_DATABASE=library_db -p 3306:3306 -d mysql:8.0
+```
 
-Step 6:  ```mvn spring-boot:run```
+Assurez-vous que le conteneur est en cours d'exécution avant de démarrer l'application.
 
-Step 7: From the browser call the endpoint http://localhost:9080
+### Remarque
+L'application utilise MySQL dans un conteneur. Vous devez installer MySQL localement pour y accéder.
 
-Step 8: Admin Login User Id: ```admin@admin.in``` & Password: ```Temp123```
+### Étape 1 : Cloner le Dépôt
+Téléchargez ou clonez le code source depuis GitHub vers votre machine locale.
 
+### Étape 2 : Installer les Prérequis
+- Installer **JDK 17** : [Télécharger JDK 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
+- Installer **Maven** : [Télécharger Maven](https://maven.apache.org/install.html)
+- Installer un IDE (Optionnel) : IntelliJ IDEA, Eclipse ou Apache NetBeans
 
-# Admin Login Interface
+### Étape 3 : Compiler et Exécuter l'Application
+```sh
+mvn clean install
+mvn spring-boot:run
+```
 
-<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiiuctxupeOK4Nh8j-nomwwapjkcVvkYig3lX7qoifcXE76_6CnOXMZ-CLww7G180qegsCkrtyUlaqpJsWm9GzhX9QUFxyNyEUAXFD5UWJpvh2BdIr0wyAnFC38QOdsL_1vak8LtxYHrZyplCU_Sri-7kM9nXxI9heXXB0621rzJgL6j1CSweX6xjaorg/s945/admin-login.png">
+### Étape 4 : Accéder à l'Application
+Ouvrez votre navigateur et visitez :
+```
+http://127.0.0.1:8080
+```
 
-# Add new books, update books, view books, delete books
+## Pile Technologique
+- **Java 17**
+- **Spring Boot**
+- **Maven**
+- **MySQL** (Conteneur Docker)
+- **Thymeleaf / React (Optionnel pour le Frontend)**
 
-<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjYMpuCQx3lGsS4T_H4ziyDWIkBpYV5qgo5JHFMV0Drper48H7YfygEdv0htE3yWo8mlypUW9W7NFY00UtrVznFfFYIzNGAXBeskhBb_kHAJrVKnI7O5mZt0_c085n6ir-cNVEYsTYffn6WgCmoBiZULR88ah_YxDC-ywRKPTsxj58GcHFnyyeX00RsNA/s800/library-management-system.png">
+## Configuration de l'Application
+Ajoutez les configurations suivantes dans `application.properties` :
+```properties
+server.port=8080
+server.error.whitelabel.enabled=false
 
-# Add new authors, update authors, view authors, delete authors
+# Configuration de la connexion
+spring.datasource.url=jdbc:mysql://localhost:3306/library_db
+spring.datasource.username=root
+spring.datasource.password=rootpassword
 
-<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEixAW5k4E9IXf_OuVO1S5m100KS1xFo2ZrFoLnZYvNLjfpmIdI8W0ukd6yQn6oTsSWBKjDdAIGsnPf0EhgRwKzfpVq3mJXMcqG94Qp2oCCy0Pzf01b3kXP2ahgbvpFQND60c7cHwPNZ7A6uXh7fxqvB5od26PleS3giunEN-uAuFIuKijjELspH1_gLcw/s934/authors-list.png">
+# Configuration JPA
+spring.jpa.hibernate.ddl-auto=create-drop
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
 
-# Add new categories, update categories, view categories, delete categories
+# Logging
+logging.level.org.hibernate.SQL=DEBUG
+logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
+```
 
-<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhYe6-eBO4HZjqE1Rr0PLoHS1dlvlnwuagwQtX6eRavoDsWRGk4yfguhWIdcOFRgM4H7985xL1bdiLQLqX_iU7RzddDb1yiQ0P3M0sfwUdTRlRGMg85Kp2KKTsVZH5WGlptL6LFRTITq4oSCJFFCZwGML1RrxI-chu-xb4eXOWIoZpNlFWLLUzkW6zLdQ/s935/categorylist.png">
+## Captures d'écran
 
-# Add new publishers, update publishers, view publishers, delete publishers
+### Page de Connexion
+![Page de Connexion](untitled/capture/page de connection.png)
 
-<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhcNQAd4UVi_bYQQSvW49hn0rQ1O7bEBDyN4DDNJSH1rtxBg37QIHQKAp7ELGbFV4Xva2F0DmhTkA3vKVeZcmKs7lODgTulsJr1aLyBckEojzxzZE5FYlfuEwD62Qco6PsjdNVPEWT76GlyVnSP94zNZK59w3CMRuvbYjoc1-MpyXj-WCeNEjPDm6mucw/s938/publishers-list.png">
+### Interface de l'Application d'Admin
+![Interface de l'Application](untitled/capture/page de admistarteur.png)
 
-# Syst-me-de-Gestion-de-Biblioth-que
-# Syst-me-de-Gestion-de-Biblioth-que
-# Syst-me-de-Gestion-de-Biblioth-que
-# Syst-me-de-Gestion-de-Biblioth-que
-# Syst-me-de-Gestion-de-Biblioth-que
-# Syst-me-de-Gestion-de-Biblioth-que
-# Syst-me-de-Gestion-de-Biblioth-que
+### Interface de l'Application d'un Utilisateur Normal
+![Interface de l'Application](untitled/capture/page de l utlisateur.png)
+
+---
+Ce projet est conçu pour gérer efficacement les opérations de la bibliothèque, offrant une interface simple et intuitive pour les administrateurs et les étudiants.
 # Syst-me-de-Gestion-de-Biblioth-que
