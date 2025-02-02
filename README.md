@@ -84,7 +84,7 @@ logging.level.org.hibernate.SQL=DEBUG
 logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
 ```
 
-## Captures d'écran
+## Captures d'écran 
 
 ### Page de Connexion
 ![Page de Connexion](untitled/capture/page de connection.png)

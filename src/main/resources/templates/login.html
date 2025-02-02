@@ -9,87 +9,160 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 	<style>
 		body {
-            background-color: #f8f9fa;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            position: relative;
+            overflow: hidden;
         }
+
+        .background-shapes div {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .shape1 { width: 300px; height: 300px; top: -50px; left: -50px; }
+        .shape2 { width: 200px; height: 200px; bottom: -50px; right: -50px; }
+
         .login-container {
-            background-color: white;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-            padding: 2rem;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            padding: 2.5rem;
             margin-top: 3rem;
+            position: relative;
+            z-index: 1;
+            transform: translateY(0);
+            animation: slideUp 0.8s ease;
         }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
         .login-title {
-            color: #2c3e50;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            font-size: 2.2rem;
             text-align: center;
         }
+
         .form-control {
-            border-radius: 8px;
-            padding: 0.8rem;
-            border: 1px solid #e0e0e0;
-        }
-        .form-control:focus {
-            box-shadow: 0 0 0 0.2rem rgba(44, 62, 80, 0.25);
-            border-color: #2c3e50;
-        }
-        .btn-login {
-            background-color: #2c3e50;
-            border: none;
-            padding: 0.8rem;
-            border-radius: 8px;
-            font-weight: 600;
+            border-radius: 10px;
+            padding: 1rem;
+            border: 2px solid #e9ecef;
             transition: all 0.3s ease;
         }
+
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .input-group-text {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            color: white;
+            border-radius: 10px 0 0 10px !important;
+            min-width: 45px;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .btn-login {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            padding: 1rem;
+            border-radius: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.4s ease;
+        }
+
         .btn-login:hover {
-            background-color: #34495e;
             transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
         }
+
         .alert {
-            border-radius: 8px;
+            border-radius: 10px;
+            border-left: 4px solid;
         }
+
+        .alert-danger {
+            border-color: #dc3545;
+        }
+
+        .alert-info {
+            border-color: #17a2b8;
+        }
+
         .form-group label {
-            color: #2c3e50;
-            font-weight: 500;
+            color: #495057;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
         }
+
+        .fa-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .form-control:focus + .input-group-append .fa-icon {
+            transform: scale(1.2);
+        }
+
 	</style>
 </head>
 <body>
+<div class="background-shapes">
+	<div class="shape1"></div>
+	<div class="shape2"></div>
+</div>
+
 <div th:insert="comman/header :: header"></div>
 
 <div class="container">
 	<div class="row justify-content-center">
-		<div class="col-md-6">
+		<div class="col-md-6 col-lg-5">
 			<div class="login-container">
 				<h1 class="login-title">Espace Administrateur</h1>
 				<form th:action="@{/login}" method="post">
 
-					<!-- Message d'erreur -->
-					<div th:if="${param.error}" class="alert alert-danger">
-						<i class="fas fa-exclamation-circle"></i>
+					<!-- Error Message -->
+					<div th:if="${param.error}" class="alert alert-danger alert-dismissible fade show">
+						<i class="fas fa-exclamation-circle mr-2"></i>
 						Identifiant ou mot de passe incorrect.
+						<button type="button" class="close" data-dismiss="alert">
+							<span>&times;</span>
+						</button>
 					</div>
 
-					<!-- Message de déconnexion -->
-					<div th:if="${param.logout}" class="alert alert-info">
-						<i class="fas fa-info-circle"></i>
+					<!-- Logout Message -->
+					<div th:if="${param.logout}" class="alert alert-info alert-dismissible fade show">
+						<i class="fas fa-info-circle mr-2"></i>
 						Vous avez été déconnecté avec succès.
+						<button type="button" class="close" data-dismiss="alert">
+							<span>&times;</span>
+						</button>
 					</div>
 
 					<div class="form-group">
 						<label for="username">Identifiant</label>
 						<div class="input-group">
 							<div class="input-group-prepend">
-                                    <span class="input-group-text">
-                                        <i class="fas fa-user"></i>
-                                    </span>
+                                <span class="input-group-text">
+                                    <i class="fas fa-user fa-icon"></i>
+                                </span>
 							</div>
 							<input type="text" class="form-control" id="username"
 								   name="username" placeholder="Entrez votre email"
-								   autofocus="autofocus" required>
+								   autofocus required>
 						</div>
 					</div>
 
@@ -97,9 +170,9 @@
 						<label for="password">Mot de passe</label>
 						<div class="input-group">
 							<div class="input-group-prepend">
-                                    <span class="input-group-text">
-                                        <i class="fas fa-lock"></i>
-                                    </span>
+                                <span class="input-group-text">
+                                    <i class="fas fa-lock fa-icon"></i>
+                                </span>
 							</div>
 							<input type="password" class="form-control" id="password"
 								   name="password" placeholder="Entrez votre mot de passe"
@@ -107,9 +180,8 @@
 						</div>
 					</div>
 
-					<div class="form-group">
-						<button type="submit" name="login-submit" id="login-submit"
-								class="btn btn-primary btn-login btn-block">
+					<div class="form-group mt-4">
+						<button type="submit" class="btn btn-primary btn-login btn-block">
 							<i class="fas fa-sign-in-alt mr-2"></i>Se Connecter
 						</button>
 					</div>
